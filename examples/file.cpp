@@ -13,5 +13,7 @@ int main() {
          << "\treturn 0;" << endl
          << "}";
 
+    File.close();
+
     return 0;
 }
