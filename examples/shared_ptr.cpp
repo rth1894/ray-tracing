@@ -14,14 +14,14 @@ class Person {
 };
 
 int main() {
-    string name = "";
     vector<shared_ptr<Person>> people;
 
-    for (int i=0; i<people.size(); i++) {
+    for (int i=0; i<3; i++) {
+        string name;
         cin >> name;
         people.push_back(make_shared<Person>(name));
     }
 
     for (int i=0; i<people.size(); i++)
-        cout << people[i]->getName() << endl;
+        cout << "Name: " << people[i]->getName() << endl;
 }
