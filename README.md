@@ -7,7 +7,7 @@ A ray tracer written in modern C++ with planned features including:
 ---
 
 ## Warm-up and Ray Tracing Exercises
-COMPLETED a set of smaller excercises to get more comfortable with:
+COMPLETED a set of smaller exercises to get more comfortable with:
 - Memory management (RAII, smart pointers)
 - Multithreading
 - File I/O
