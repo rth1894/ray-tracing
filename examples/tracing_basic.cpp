@@ -1,27 +1,7 @@
 // ray equation: P(t) = ray origin + t * ray direction
 // where t tells you how far along the ray we are
 #include <iostream>
-#include <math.h>
-
-struct Vec3 {
-    float x, y, z;
-};
-
-Vec3 operator+(const Vec3& a, const Vec3& b) {
-    return { (a.x + b.x), (a.y + b.y), (a.z + b.z) };
-}
-Vec3 operator-(const Vec3& a, const Vec3& b) {
-    return { (a.x - b.x), (a.y - b.y), (a.z - b.z) };
-}
-Vec3 operator*(const Vec3& a, float num) {
-    return { (a.x * num), (a.y * num), (a.z * num) };
-}
-float dot(const Vec3& a, const Vec3& b) {
-    return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
-}
-Vec3 cross(const Vec3& a, const Vec3& b) {
-    return { (a.y*b.z - a.z*b.y), (a.z*b.x - a.x*b.z), (a.x*b.y - a.y*b.x) };
-}
+#include "vec3.h"
 
 struct Ray {
     Vec3 origin, direction;
@@ -35,9 +15,9 @@ class Sphere {
         Vec3 center;
         double radius;
 
-    Sphere(Vec3 c, double r) : center(c), radius(r) {}
+    Sphere(const Vec3& c, double r) : center(c), radius(r) {}
 
-        bool intersect(Ray& ray, double& t_hit) {
+        bool intersect(const Ray& ray, double& t_hit) {
             Vec3 L = ray.origin - center;
             double a = dot(ray.direction, ray.direction);
             double b = 2 * dot(ray.direction, L);
@@ -69,6 +49,7 @@ int main() {
     if (s.intersect(r, t)) {
         std::cout << "Hit sphere at t = " << t << "\n";
         Vec3 hitPoint = r.at(t);
+        std::cout << "Hit at (" << hitPoint.x << ", " << hitPoint.y << ", " << hitPoint.z << ")\n";
     } else {
         std::cout << "No hit\n";
     }
