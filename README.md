@@ -1,5 +1,5 @@
 # C++ Ray Tracer (In Progress)
-A ray tracer written in modern C++ with planned features including:
+A ray tracer written in C++ with planned features including:
 - Bounding Volume Hierarchies (BVH) for acceleration
 - Recursive reflections
 - Multithreading for performance
