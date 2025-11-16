@@ -3,21 +3,15 @@
 
 #include "vec3.h"
 
-struct Ray {
+class Ray {
+public:
     Vec3 origin;
     Vec3 direction;
 
+    Ray() {}
+    Ray(const Vec3& o, const Vec3& d) : origin(o), direction(d) {}
+
     Vec3 at(double t) const;
-};
-
-class Sphere {
-public:
-    Vec3 center;
-    double radius;
-
-    Sphere(const Vec3& c, double r);
-
-    bool intersect(const Ray& ray, double& t_hit) const;
 };
 
 #endif

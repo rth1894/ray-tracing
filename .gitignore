@@ -1,3 +1,25 @@
-a.out
+/build/
+/build-debug/
+/build-release/
 
-*.ppm
+CMakeFiles/
+CMakeCache.txt
+CMakeLists.txt
+cmake_install.cmake
+Makefile
+
+ray-tracer
+*.out
+*.exe
+
+*.swp
+*.swo
+*~
+.DS_Store
+
+*.o
+*.obj
+
+images/
+
+*.log
