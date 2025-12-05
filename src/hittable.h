@@ -2,11 +2,13 @@
 #define HITTABLE_H
 
 #include "ray.h"
+#include <memory>
 
 struct HitRecord {
     double t;
     Vec3 p;
     Vec3 normal;
+    std::shared_ptr<class Material> mat_ptr; // forward-declare Material
 };
 
 class Hittable {

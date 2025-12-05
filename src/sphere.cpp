@@ -1,30 +1,27 @@
 #include "sphere.h"
 #include <cmath>
 
-Sphere::Sphere(const Vec3& c, double r)
-    : center(c), radius(r) {}
-
 bool Sphere::hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     Vec3 oc = r.origin - center;
     double a = dot(r.direction, r.direction);
-    double b = 2.0 * dot(oc, r.direction);
-    double c = dot(oc, oc) - radius * radius;
-
-    double discriminant = b * b - 4.0 * a * c;
+    double half_b = dot(oc, r.direction); // b/2
+    double c = dot(oc, oc) - radius*radius;
+    double discriminant = half_b*half_b - a*c;
     if (discriminant < 0) return false;
-
     double sqrt_d = std::sqrt(discriminant);
 
-    // Find nearest root
-    double t = (-b - sqrt_d) / (2.0 * a);
-    if (t < t_min || t > t_max) {
-        t = (-b + sqrt_d) / (2.0 * a);
-        if (t < t_min || t > t_max) return false;
+    double root = (-half_b - sqrt_d) / a;
+    if (root < t_min || root > t_max) {
+        root = (-half_b + sqrt_d) / a;
+        if (root < t_min || root > t_max)
+            return false;
     }
 
-    rec.t = t;
-    rec.p = r.at(t);
-    rec.normal = (rec.p - center) / radius;
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    Vec3 outward_normal = (rec.p - center) / radius;
+    rec.normal = outward_normal;
+    rec.mat_ptr = mat_ptr; // set material
 
     return true;
 }
