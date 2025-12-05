@@ -3,6 +3,8 @@
 
 #include "ray.h"
 #include "util.h"
+#include "hittable.h"
+
 #include <memory>
 
 struct ScatterRecord {
