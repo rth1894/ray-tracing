@@ -1,68 +1,86 @@
-# C++ Ray Tracer (In Progress)
-A ray tracer written in C++ with planned features including:
-- Bounding Volume Hierarchies (BVH) for acceleration
-- Recursive reflections
-- Multithreading for performance
+# C++ Ray Tracer
+
+A simple **CPU-based ray tracer written in C++** as a learning project.
 
 ---
 
-## Warm-up and Ray Tracing Exercises
-COMPLETED a set of smaller exercises to get more comfortable with:
-- Memory management (RAII, smart pointers)
-- Multithreading
+## What is Implemented
+
+- Basic ray tracing pipeline
+- Sphere ray–intersection
+- Scene abstraction using Hittable objects
+- Simple materials (Lambertian diffuse, metal, dielectric)
+- Recursive ray scattering with depth limit
+- Gradient background
+- Image output to `.ppm`
+- Optional SFML window rendering
+- Built using CMake
+
+---
+
+## Warm-up Work
+
+Before the main ray tracer, smaller exercises were completed to practice:
+
+- RAII and memory management
+- Smart pointers
 - File I/O
-- Vector math (dot/cross products)
+- Vector math (dot and cross products)
+- Basic multithreading concepts
 
-These are collected under `examples/` and serve as the foundation for the main project.
-
----
-
-## Implementation
-Started Working on the main ray tracer:
-- Implemented core classes: Vec3, Ray, Sphere, Hittable.
-- Implemented basic sphere intersection, simple gradient background.
-- Image outputs to `.ppm`
-- Working on suface normals and coloring, Lambertian diffuse shading, multiple objects.
-
-Progress can be checked under `src/`
+These live under `examples/` and informed the final design.
 
 ---
 
-## Build with CMake
-This project uses **CMake** as its build system.
+## Project Structure
+
+src/
+- main.cpp
+- vec3.h
+- ray.h / ray.cpp
+- sphere.*
+- hittable.*
+- hittable_list.*
+- material.*
+- util.*
+
+---
+
+## Build System
+
+Uses **CMake**.
 
 ### Requirements
-```
-sudo apt install cmake g++
-```
+- C++17 compiler
+- CMake (>= 3.16)
+- SFML 3 (optional)
+
 ---
 
-## To Build and Run
+## Build and Run
 
-### 1. Create a build directory
+1. Create build directory
 ```
 mkdir build
 cd build
 ```
 
-### 2. Generate build files using CMake
+2. Configure
 ```
 cmake ..
 ```
 
-### 3. Compile the project
+3. Build
 ```
-make
+cmake --build .
 ```
 
-### 4. Run the ray tracer
+4. Run
 ```
 ./ray-tracer
 ```
 
-To save output:
+Save image output:
 ```
 ./ray-tracer > output.ppm
 ```
-
----

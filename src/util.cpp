@@ -1,53 +1,37 @@
 #include "util.h"
-#include <limits>
+#include <algorithm>
 #include <cmath>
-#include <iostream>
-
-static std::mt19937_64 rng(std::random_device{}());
-static std::uniform_real_distribution<double> uni01(0.0, 1.0);
-
-double random_double() {
-    return uni01(rng);
-}
-
-double random_double(double min, double max) {
-    return min + (max - min) * random_double();
-}
 
 Vec3 random_in_unit_sphere() {
     while (true) {
-        Vec3 p(random_double(-1,1), random_double(-1,1), random_double(-1,1));
-        if (length_squared(p) >= 1) continue;
+        Vec3 p = Vec3{random_double(), random_double(), random_double()}*2.0 - Vec3{1,1,1};
+        if (dot(p,p) >= 1) continue;
         return p;
     }
 }
 
 Vec3 random_unit_vector() {
-    double a = random_double(0, 2*M_PI);
-    double z = random_double(-1, 1);
-    double r = std::sqrt(1 - z*z);
-    return {r*std::cos(a), r*std::sin(a), z};
+    return normalize(random_in_unit_sphere());
 }
 
-double clamp(double x, double min, double max) {
-    if (x < min) return min;
-    if (x > max) return max;
-    return x;
+Vec3 reflect(const Vec3& v, const Vec3& n) {
+    return v - 2*dot(v,n)*n;
 }
 
-void write_color(std::ostream& out, Vec3 color, int samples_per_pixel) {
-    double r = color.x;
-    double g = color.y;
-    double b = color.z;
+Vec3 refract(const Vec3& uv, const Vec3& n, double etai_over_etat) {
+    double cos_theta = fmin(dot(-uv, n), 1.0);
+    Vec3 r_out_perp = etai_over_etat * (uv + cos_theta * n);
+    Vec3 r_out_parallel = -sqrt(fabs(1.0 - dot(r_out_perp,r_out_perp))) * n;
+    return r_out_perp + r_out_parallel;
+}
 
-    double scale = 1.0 / samples_per_pixel;
-    r = std::sqrt(scale * r);
-    g = std::sqrt(scale * g);
-    b = std::sqrt(scale * b);
+bool near_zero(const Vec3& v) {
+    const double s = 1e-8;
+    return (fabs(v.x) < s) && (fabs(v.y) < s) && (fabs(v.z) < s);
+}
 
-    int ir = static_cast<int>(256 * clamp(r, 0.0, 0.999));
-    int ig = static_cast<int>(256 * clamp(g, 0.0, 0.999));
-    int ib = static_cast<int>(256 * clamp(b, 0.0, 0.999));
-
-    out << ir << ' ' << ig << ' ' << ib << '\n';
+double reflectance(double cosine, double ref_idx) {
+    double r0 = (1-ref_idx) / (1+ref_idx);
+    r0 = r0 * r0;
+    return r0 + (1-r0) * pow(1-cosine,5);
 }

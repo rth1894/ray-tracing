@@ -2,7 +2,7 @@
 #define SPHERE_H
 
 #include "hittable.h"
-#include "material.h"
+#include "vec3.h"
 #include <memory>
 
 class Sphere : public Hittable {
