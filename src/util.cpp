@@ -1,5 +1,4 @@
 #include "util.h"
-#include <algorithm>
 #include <cmath>
 
 Vec3 random_in_unit_sphere() {
